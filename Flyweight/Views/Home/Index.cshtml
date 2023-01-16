@@ -1,0 +1,32 @@
+﻿@model HashSet<DataLayer.Entities.Person>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<table class="table table-bordered">
+    <tr>
+        <td>
+            First Name
+        </td>
+        <td>
+            Last Name
+        </td>
+        <td>
+            Age
+        </td>
+    </tr>
+    @foreach (var person in Model)
+    {
+        <tr>
+            <td>
+                @person.FirstName
+            </td>
+            <td>
+                @person.LastName
+            </td>
+            <td>
+                @person.Age
+            </td>
+        </tr>
+    }
+</table>            
