@@ -1,4 +1,5 @@
-﻿using DataLayer.Interfaces;
+﻿using DataLayer.Implementations;
+using DataLayer.Interfaces;
 
 namespace DataLayer.Context
 {
@@ -6,13 +7,24 @@ namespace DataLayer.Context
     {
         private readonly SampleDbContext _dbContext;
 
-        public UnitOfWork(SampleDbContext dbContext, IPersonRepository personRepository)
+        private IPersonRepository _personRepository;
+
+        public UnitOfWork(SampleDbContext dbContext)
         {
             _dbContext = dbContext;
-            PersonRepository = personRepository;
         }
 
-        public IPersonRepository PersonRepository { get; }
+        public IPersonRepository PersonRepository
+        {
+            get
+            {
+                if (_personRepository == null)
+                {
+                    _personRepository = new PersonRepository(_dbContext);
+                }
+                return _personRepository;
+            }
+        }
 
         public void SaveChanges()
         {
@@ -23,5 +35,6 @@ namespace DataLayer.Context
         {
             _dbContext.Dispose();
         }
+
     }
 }
